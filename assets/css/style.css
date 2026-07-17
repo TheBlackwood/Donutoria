@@ -434,6 +434,8 @@ body{
 
     z-index:999;
 
+    transition:.35s;
+
 }
 
 .logo{
@@ -2043,4 +2045,19 @@ border-radius:10px;
 
 ::-webkit-scrollbar-thumb:hover{
     background:linear-gradient(#3b82f6,#93c5fd);
+}
+.navbar.scrolled{
+
+    padding:12px 10%;
+
+    backdrop-filter:blur(22px);
+
+    background:rgba(8,20,32,.88);
+
+    box-shadow:0 5px 25px rgba(0,0,0,.35);
+
+}
+@font-face {
+    font-family: "Minecraft";
+    src: url("assets/fonts/Minecrafter.ttf") format("truetype");
 }

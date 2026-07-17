@@ -29,3 +29,18 @@ app.post("/api/register", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+window.addEventListener("scroll",()=>{
+
+    const navbar=document.querySelector(".navbar");
+
+    if(window.scrollY>50){
+
+        navbar.classList.add("scrolled");
+
+    }else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});
