@@ -734,11 +734,48 @@ body{
 
 .footer{
 
-    margin-top:100px;
+    margin-top:120px;
 
-    background:#08111f;
+    position:relative;
 
-    padding:60px 10% 25px;
+    background:
+
+linear-gradient(
+180deg,
+#07111f 0%,
+#091728 40%,
+#0b1b30 100%
+);
+
+box-shadow:
+0 -50px 120px rgba(37,99,235,.08);
+
+
+}
+
+.footer::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-180px;
+
+    left:0;
+
+    width:100%;
+
+    height:180px;
+
+    pointer-events:none;
+
+    background:linear-gradient(
+        to bottom,
+        transparent,
+        rgba(8,17,31,.4),
+        rgba(8,17,31,.75),
+        #08111f
+    );
 
 }
 
@@ -1384,7 +1421,7 @@ body{
 .faq{
 
     padding:100px 10%;
-
+    
 }
 
 .faq h2{
@@ -1982,7 +2019,7 @@ border-radius:10px;
             rgba(8,20,32,.55),
             rgba(8,20,32,.75)
         ),
-        url("../images/hero.webp");
+        url("");
 
     background-size:cover;
 
@@ -1994,46 +2031,29 @@ border-radius:10px;
 
     overflow: hidden;
 
-    -webkit-mask-image:linear-gradient(
-        to bottom,
-        black 70%,
-        transparent 100%
-    );
-
-    mask-image:linear-gradient(
-        to bottom,
-        black 70%,
-        transparent 100%
-    );
-
-
-
 
 }
-.hero::after{
+.hero{
 
-    content:"";
+    background:url("../images/hero.webp") center/cover no-repeat;
 
-    position:absolute;
-
-    left:0;
-
-    bottom:0;
-
-    width:100%;
-
-    height:220px;
-
-    background:linear-gradient(
+    -webkit-mask-image: linear-gradient(
         to bottom,
-        rgba(7,17,31,0),
-        rgba(7,17,31,.25),
-        rgba(7,17,31,.6),
-        #07111f
+        black 0%,
+        black 65%,
+        rgba(0,0,0,.95) 75%,
+        rgba(0,0,0,.65) 85%,
+        transparent 100%
     );
 
-pointer-events:none;
-
+    mask-image: linear-gradient(
+        to bottom,
+        black 0%,
+        black 65%,
+        rgba(0,0,0,.95) 75%,
+        rgba(0,0,0,.65) 85%,
+        transparent 100%
+    );
 }
 /* Chrome, Edge, Opera */
 
@@ -2068,4 +2088,9 @@ pointer-events:none;
 @font-face {
     font-family: "Minecraft";
     src: url("assets/fonts/Minecrafter.ttf") format("truetype");
+}
+.hero-left,
+.hero-right{
+    position:relative;
+    z-index:3;
 }
