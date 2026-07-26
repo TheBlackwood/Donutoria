@@ -26,17 +26,13 @@ copyButtons.forEach(button => {
                 toast.classList.add("show");
 
                 setTimeout(() => {
-
                     toast.classList.remove("show");
-
                 }, 2500);
 
             }
 
             setTimeout(() => {
-
                 button.textContent = oldText;
-
             }, 2000);
 
         } catch {
@@ -47,81 +43,8 @@ copyButtons.forEach(button => {
 
     });
 
-});("click", async () => {
+});
 
-        try {
-
-            await navigator.clipboard.writeText("play.donutoria.ir");
-
-            copyButton.textContent = "Copied!";
-
-            if (toast) {
-
-                toast.classList.add("show");
-
-                setTimeout(() => {
-
-                    toast.classList.remove("show");
-
-                },2500);
-
-            }
-
-            setTimeout(() => {
-
-                copyButton.textContent = "Copy IP";
-
-            },2000);
-
-        } catch (err) {
-
-            alert("Unable to copy IP.");
-
-        }
-
-    });
-
-}
-const copyButton = document.getElementById("copyIP");
-const toast = document.getElementById("toast");
-
-if (copyButton) {
-
-    copyButton.addEventListener("click", async () => {
-
-        try {
-
-            await navigator.clipboard.writeText("play.donutoria.ir");
-
-            copyButton.textContent = "Copied!";
-
-            if(toast){
-
-                toast.classList.add("show");
-
-                setTimeout(()=>{
-
-                    toast.classList.remove("show");
-
-                },2500);
-
-            }
-
-            setTimeout(()=>{
-
-                copyButton.textContent = "Copy IP";
-
-            },2000);
-
-        } catch(err){
-
-            alert("Unable to copy IP.");
-
-        }
-
-    });
-
-}
 const faqItems = document.querySelectorAll(".faq-item");
 
 faqItems.forEach(item=>{
