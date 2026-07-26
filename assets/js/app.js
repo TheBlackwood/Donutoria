@@ -1,19 +1,41 @@
 console.log("Donutoria SMP Website Loaded!");
+
 const copyButton = document.getElementById("copyIP");
+const toast = document.getElementById("toast");
 
 if (copyButton) {
 
-    copyButton.addEventListener("click", () => {
+    copyButton.addEventListener("click", async () => {
 
-        navigator.clipboard.writeText("play.donutoria.ir");
+        try {
 
-        copyButton.textContent = "Copied!";
+            await navigator.clipboard.writeText("play.donutoria.ir");
 
-        setTimeout(() => {
+            copyButton.textContent = "Copied!";
 
-            copyButton.textContent = "Copy IP";
+            if (toast) {
 
-        },2000);
+                toast.classList.add("show");
+
+                setTimeout(() => {
+
+                    toast.classList.remove("show");
+
+                },2500);
+
+            }
+
+            setTimeout(() => {
+
+                copyButton.textContent = "Copy IP";
+
+            },2000);
+
+        } catch (err) {
+
+            alert("Unable to copy IP.");
+
+        }
 
     });
 
