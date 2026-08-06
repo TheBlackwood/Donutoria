@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-    <link rel="stylesheet" href="assets\css\style.css">
-    <link rel="stylesheet" href="assets\js\app.js">
+<link rel="stylesheet" href="assets/css/style.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Donutoria | Login</title>
 
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
@@ -70,21 +68,23 @@
 
         <p>Login to your account</p>
 
-        <form>
+<form id="loginForm">
 
-            <input
-                type="email"
-                placeholder="Email">
+    <input
+        id="username"
+        type="text"
+        placeholder="Minecraft Username">
 
-            <input
-                type="password"
-                placeholder="Password">
+    <input
+        id="phone"
+        type="text"
+        placeholder="Phone Number">
 
-            <button type="submit">
-                Login
-            </button>
+    <button type="submit">
+        Login
+    </button>
 
-        </form>
+</form>
 
         <a href="#">
             Forgot Password?
@@ -132,14 +132,42 @@
     </p>
 
 </footer>
+<script>
 
+const form = document.getElementById("loginForm");
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+form.addEventListener("submit", async function(e){
 
-    <script src="assets/js/app.js"></script>
+    e.preventDefault();
 
+    const username =
+        document.getElementById("username").value;
 
+    const phone =
+        document.getElementById("phone").value;
 
+    const response = await fetch(
+        "http://localhost:3000/api/register",
+        {
+            method: "POST",
 
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body: JSON.stringify({
+                username,
+                phone
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+
+});
+
+</script>
 </body>
 </html>
