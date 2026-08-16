@@ -174,3 +174,117 @@ if (menuToggle && nav) {
     });
 
 }
+const registerForm = document.getElementById("registerForm");
+
+if (registerForm) {
+
+    registerForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const phone = document.getElementById("phone").value;
+
+        const message = document.getElementById("registerMessage");
+
+        try {
+
+            const response = await fetch("http://localhost:3000/api/register", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    username: username,
+                    phone: phone
+                })
+
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                message.textContent = "✅ ثبت نام با موفقیت انجام شد!";
+                message.style.color = "#22c55e";
+
+            } else {
+
+                message.textContent = "❌ ثبت نام انجام نشد.";
+                message.style.color = "#ef4444";
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent = "❌ اتصال به سرور برقرار نشد.";
+            message.style.color = "#ef4444";
+
+        }
+
+    });
+
+}
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+
+    loginForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const username = document.getElementById("loginUsername").value;
+        const phone = document.getElementById("loginPhone").value;
+
+        const message = document.getElementById("loginMessage");
+
+        try {
+
+            const response = await fetch("http://localhost:3000/api/login", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    username: username,
+                    phone: phone
+                })
+
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                message.textContent = "✅ ورود با موفقیت انجام شد.";
+                message.style.color = "#22c55e";
+
+                console.log("Logged in user:", data.user);
+
+            } else {
+
+                message.textContent = "❌ " + data.message;
+                message.style.color = "#ef4444";
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent = "❌ اتصال به سرور برقرار نشد.";
+            message.style.color = "#ef4444";
+
+        }
+
+    });
+
+}

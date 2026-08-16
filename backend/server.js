@@ -48,6 +48,51 @@ app.post("/api/register", (req, res) => {
 
 });
 
+// Login API
+app.post("/api/login", (req, res) => {
+
+    const { username, phone } = req.body;
+
+    const sql = `
+        SELECT * FROM users
+        WHERE username = ? AND phone = ?
+    `;
+
+    db.get(sql, [username, phone], (err, user) => {
+
+        if (err) {
+
+            console.log(err.message);
+
+            return res.json({
+                success: false,
+                message: "خطا در بررسی اطلاعات."
+            });
+
+        }
+
+        if (!user) {
+
+            return res.json({
+                success: false,
+                message: "نام کاربری یا شماره تلفن اشتباه است."
+            });
+
+        }
+
+        res.json({
+            success: true,
+            message: "ورود با موفقیت انجام شد.",
+            user: {
+                id: user.id,
+                username: user.username,
+                phone: user.phone
+            }
+        });
+
+    });
+
+});
 // Start Server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
