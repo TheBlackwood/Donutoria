@@ -262,14 +262,41 @@ if (loginForm) {
 
             const data = await response.json();
 
-            if (data.success) {
+if (data.success) {
 
-                message.textContent = "✅ ورود با موفقیت انجام شد.";
-                message.style.color = "#22c55e";
+    message.textContent = "✅ ورود با موفقیت انجام شد.";
+    message.style.color = "#22c55e";
 
-                console.log("Logged in user:", data.user);
+console.log("Logged in user:", data.user);
 
-            } else {
+try {
+
+    localStorage.setItem(
+        "donutoriaUser",
+        JSON.stringify(data.user)
+    );
+
+    console.log(
+        "✅ Saved user:",
+        localStorage.getItem("donutoriaUser")
+    );
+
+} catch (storageError) {
+
+    console.error(
+        "❌ LocalStorage Error:",
+        storageError
+    );
+
+}
+
+console.log(
+    "Saved user:",
+    localStorage.getItem("donutoriaUser")
+);
+}
+
+             else {
 
                 message.textContent = "❌ " + data.message;
                 message.style.color = "#ef4444";
@@ -286,5 +313,65 @@ if (loginForm) {
         }
 
     });
+
+}
+// =========================
+// DASHBOARD USER
+// =========================
+
+const playerName = document.getElementById("playerName");
+const playerAvatar = document.getElementById("playerAvatar");
+
+if (playerName) {
+
+    const savedUser = localStorage.getItem("donutoriaUser");
+
+    if (savedUser) {
+
+        const user = JSON.parse(savedUser);
+
+        // Show username
+        playerName.textContent = user.username;
+
+        // Show Minecraft avatar
+        if (playerAvatar) {
+
+            playerAvatar.src =
+                `https://mc-heads.net/avatar/${user.username}`;
+
+        }
+
+        const playerRank = document.getElementById("playerRank");
+const playerMoney = document.getElementById("playerMoney");
+
+if (playerRank) {
+    playerRank.textContent = user.rank;
+}
+
+if (playerMoney) {
+    playerMoney.textContent = `${user.donuts} 🍩`;
+}
+
+    } else {
+
+        // User is not logged in
+        playerName.textContent = "Guest";
+
+    }
+
+}
+// =========================
+// PROTECT DASHBOARD
+// =========================
+
+if (window.location.pathname.includes("dashboard.html")) {
+
+    const savedUser = localStorage.getItem("donutoriaUser");
+
+    if (!savedUser) {
+
+        window.location.href = "login.html";
+
+    }
 
 }

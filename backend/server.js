@@ -6,16 +6,53 @@ const db = require("./database/database");
 const app = express();
 const PORT = 3000;
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Test Route
-app.get("/", (req, res) => {
-    res.send("🍩 Donutoria Backend Running!");
+// =========================
+// DATABASE SETUP
+// =========================
+
+db.run(`
+    ALTER TABLE users ADD COLUMN rank TEXT DEFAULT '-'
+`, (err) => {
+
+    if (err && !err.message.includes("duplicate column name")) {
+
+        console.log("❌ Error adding rank column:", err.message);
+
+    }
+
 });
 
-// Register API
+
+db.run(`
+    ALTER TABLE users ADD COLUMN donuts INTEGER DEFAULT 0
+`, (err) => {
+
+    if (err && !err.message.includes("duplicate column name")) {
+
+        console.log("❌ Error adding donuts column:", err.message);
+
+    }
+
+});
+
+// =========================
+// HOME
+// =========================
+
+app.get("/", (req, res) => {
+
+    res.send("🍩 Donutoria Backend Running!");
+
+});
+
+
+// =========================
+// REGISTER
+// =========================
+
 app.post("/api/register", (req, res) => {
 
     const { username, phone } = req.body;
@@ -39,24 +76,31 @@ app.post("/api/register", (req, res) => {
         }
 
         res.json({
+
             success: true,
             message: "ثبت نام با موفقیت انجام شد.",
             id: this.lastID
+
         });
 
     });
 
 });
 
-// Login API
+
+// =========================
+// LOGIN
+// =========================
+
 app.post("/api/login", (req, res) => {
 
     const { username, phone } = req.body;
 
-    const sql = `
-        SELECT * FROM users
-        WHERE username = ? AND phone = ?
-    `;
+const sql = `
+    SELECT id, username, phone, rank, donuts
+    FROM users
+    WHERE username = ? AND phone = ?
+`;
 
     db.get(sql, [username, phone], (err, user) => {
 
@@ -65,35 +109,50 @@ app.post("/api/login", (req, res) => {
             console.log(err.message);
 
             return res.json({
+
                 success: false,
-                message: "خطا در بررسی اطلاعات."
+                message: "خطا در ورود."
+
             });
 
         }
+
 
         if (!user) {
 
             return res.json({
+
                 success: false,
                 message: "نام کاربری یا شماره تلفن اشتباه است."
+
             });
 
         }
 
+
         res.json({
+
             success: true,
+
             message: "ورود با موفقیت انجام شد.",
-            user: {
-                id: user.id,
-                username: user.username,
-                phone: user.phone
-            }
+
+            user: user
+
         });
 
     });
 
 });
-// Start Server
+
+
+// =========================
+// START SERVER
+// =========================
+
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+
+    console.log(
+        `Server running on http://localhost:${PORT}`
+    );
+
 });
